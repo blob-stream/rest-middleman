@@ -10,6 +10,10 @@ server.use(restify.acceptParser(server.acceptable))
 server.use(restify.queryParser())
 server.use(restify.bodyParser())
 
+server.get('/', function (req, res, next) {
+  res.send('rest api for mwa')
+  return next()
+})
 server.get('/events/recent/:amount', function (req, res, next) {
   var files = fs.readdirSync(assetPrefix)
   files.forEach((file, index) => {
@@ -27,15 +31,18 @@ server.get('/events/recent/:amount', function (req, res, next) {
     'Do you know the old Klingon proverb that revenge is a dish best served cold? It is very cold — in space.'
   ]
   var names = ['Spock', 'Tuvok', 'Seven of Nine']
-  var blobs = [1, 2, 3]
+  var blobs = [0, 1, 2]
   var ids = ['jio13jlai', 'hkasdfioe2', 'ahkfsdaoe']
   blobs.forEach(elem => {
     blobs[elem] = {
-      'blobID': ids[elem],
-      'heading': headings[elem],
-      'description': descriptions[elem],
-      'creator': names[elem],
-      'dataURL': files[elem]
+      'verb': 'newBlob',
+      'blob': {
+        'blobID': ids[elem],
+        'heading': headings[elem],
+        'description': descriptions[elem],
+        'creator': names[elem],
+        'dataURL': files[elem]
+      }
     }
   })
   res.send(blobs)
