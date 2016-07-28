@@ -1,6 +1,7 @@
 var restify = require('restify')
+var dirty = require('dirty')
 
-var assetPrefix = 'assets/'
+var db = dirty('state.db')
 var server = restify.createServer({
   name: 'blob-stream-rest-server',
   version: '0.1.0'
@@ -15,8 +16,8 @@ server.get('/', function (req, res, next) {
   return next()
 })
 server.get('/events/recent/:amount', function (req, res, next) {
-  var events = require('./generate-events')(assetPrefix)
-  res.send(events)
+  var events = db.get('events')
+  res.send(events.slice(0, req.params.amount))
   return next()
 })
 server.post('/blob/create', function (req, res, next) {

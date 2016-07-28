@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node lib/prepopulate-db.js && nodemon index.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "dirty": "^1.0.0",
     "restify": "^4.1.1"
   },
   "devDependencies": {
