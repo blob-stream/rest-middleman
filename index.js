@@ -20,6 +20,15 @@ server.get('/events/recent/:amount', function (req, res, next) {
   res.send(events.slice(0, req.params.amount))
   return next()
 })
+server.get('/blob/get/:id', function (req, res, next) {
+  var blobs = require('./lib/generate-blobs')('assets/')
+  var blobID = req.params.id
+  var blob = blobs.find(blob => {
+    if (blob.id === blobID) return true
+  })
+  res.send(blob)
+  return next()
+})
 server.post('/blob/create', function (req, res, next) {
   res.send(req.params)
   return next()
