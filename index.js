@@ -1,7 +1,7 @@
 var restify = require('restify')
-var dirty = require('dirty')
+var flatfile = require('flat-file-db')
 
-var db = dirty('state.db')
+var db = flatfile.sync('state.db')
 var server = restify.createServer({
   name: 'blob-stream-rest-server',
   version: '0.1.0'
