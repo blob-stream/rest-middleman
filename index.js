@@ -61,8 +61,12 @@ server.post('/blob/create', function (req, res, next) {
   return next()
 })
 
-server.post('/blob/vote/:id', function (req, res, next) {
-  res.send(req.params)
+server.post('/blob/vote', function (req, res, next) {
+  var events = db.get('events')
+  events.unshift(req.params)
+  db.put('events', events)
+
+  res.send('ok')
   return next()
 })
 
