@@ -15,24 +15,52 @@ server.get('/', function (req, res, next) {
   res.send('rest api for mwa')
   return next()
 })
+
 server.get('/events/recent/:amount', function (req, res, next) {
   var events = db.get('events')
   res.send(events.slice(0, req.params.amount))
   return next()
 })
+
 server.get('/blob/get/:id', function (req, res, next) {
-  var blobs = require('./lib/generate-blobs')('assets/')
-  var blobID = req.params.id
+  var blobs = db.get('blobs')
   var blob = blobs.find(blob => {
-    if (blob.id === blobID) return true
+    if (blob.id === req.params.id) return true
   })
+  if (!blob) {
+    var keys = []
+    blobs.forEach((_, key) => keys.push(key))
+    res.send('blob unknown, available keys: ' + keys)
+    return next()
+  }
   res.send(blob)
   return next()
 })
+
 server.post('/blob/create', function (req, res, next) {
-  res.send(req.params)
+  var blobs = db.get('blobs')
+  var received = blobs.find(blob => {
+    if (blob.id === req.params.id) return true
+  })
+  if (received) {
+    res.send('ok, duplicate')
+    return next()
+  }
+
+  blobs.push(req.params)
+  db.put('blobs', blobs)
+
+  var events = db.get('events')
+  events.unshift({
+    verb: 'newBlob',
+    blobID: req.params.id
+  })
+  db.put('events', events)
+
+  res.send('ok')
   return next()
 })
+
 server.post('/blob/vote/:id', function (req, res, next) {
   res.send(req.params)
   return next()

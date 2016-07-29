@@ -6,7 +6,7 @@
   "scripts": {
     "test": "standard && tape test.js",
     "start": "node lib/prepopulate-db.js && nodemon index.js",
-    "prepopulate": "rm state.db && node lib/prepopulate-db.js"
+    "init-db": "node lib/prepopulate-db.js"
   },
   "author": "",
   "license": "MIT",
