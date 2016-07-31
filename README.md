@@ -5,3 +5,8 @@
 ```
 IONIC app <---> rest-middleman <---> {website, MacOS, rest-middleman}
 ```
+
+```sh
+npm install
+npm start
+```
