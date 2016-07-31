@@ -70,6 +70,12 @@ server.post('/blob/vote', function (req, res, next) {
   return next()
 })
 
+server.get('/reset', function (req, res, next) {
+  require('./lib/init-db')
+  res.send('ok')
+  return next()
+})
+
 server.listen(62859, function () {
   console.log('%s listening at %s', server.name, server.url)
 })

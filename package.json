@@ -5,14 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "standard && tape test.js",
-    "start": "node lib/prepopulate-db.js && nodemon index.js",
-    "init-db": "node lib/prepopulate-db.js"
+    "start": "node lib/init-db.js && nodemon index.js",
+    "init-db": "node lib/init-db.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "datauri": "^1.0.4",
     "flat-file-db": "^1.0.0",
+    "level": "^1.4.0",
     "restify": "^4.1.1"
   },
   "devDependencies": {
